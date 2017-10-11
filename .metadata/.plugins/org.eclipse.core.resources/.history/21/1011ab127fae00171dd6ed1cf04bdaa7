@@ -1,0 +1,12 @@
+import java.util.Date;
+
+public class Person {
+	private int id;
+	private String nom;
+	private String prenom;
+	private Date dateNaissance; 
+	private String adressMail;
+	
+	
+	
+}

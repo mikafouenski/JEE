@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;ExceptionPersonInvalidate.java&apos; to &apos;Myapp/src/exception&apos;&#x0A;- Original project: &apos;Myapp&apos;&#x0A;- Destination element: &apos;Myapp/src/exception&apos;&#x0A;- Original element: &apos;fr.myapp.bus.ExceptionPersonInvalidate.java&apos;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src&lt;exception" element1="/src&lt;fr.myapp.bus{ExceptionPersonInvalidate.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1507730606080" units="1" version="1.0"/>
+</session>

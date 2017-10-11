@@ -1,0 +1,39 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+
+import exception.DaoException;
+import person.Person;
+
+
+public class Dao extends JdbcTools{
+	
+	public Collection<Person> findPersons() throws DaoException {
+		ResultSetToBean<Person> t = (rs)-> { return new Person(rs.getString("nom"), rs.getString("prenom"), rs.getInt("age"));};
+		String query = "select nom, prenom, age from personnes;";
+		Collection<Person> persons = null;
+		try {
+			persons = findBeans(query,t);
+		} catch (SQLException e) {
+			throw new DaoException();
+		}
+		return persons; 
+	}
+	
+	public void addPerson(Person p) throws DaoException {
+		try (Connection c = newConnection()) {
+			Statement st = c.createStatement();
+			String sql  = "INSERT INTO personnes(nom,prenom,age) VALUES ("
+					+"'" + p.getNom() + "', "
+					+"'" + p.getPrenom() + "', "
+					+ p.getAge() + ");";
+			st.executeUpdate(sql);
+		} catch (SQLException e) {
+			throw new DaoException(); 
+		}
+	}
+
+}

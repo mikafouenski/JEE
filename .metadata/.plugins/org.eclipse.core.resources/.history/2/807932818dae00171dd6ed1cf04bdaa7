@@ -1,0 +1,15 @@
+package exception;
+
+public class ExceptionPersonInvalidate extends Exception {
+	private String NomValide;
+	private String EmailValide;
+	
+	public ExceptionPersonInvalidate() {
+		// TODO Auto-generated constructor stub
+		this.EmailValide = "";
+		this.NomValide = "";
+	}
+
+	
+		
+}

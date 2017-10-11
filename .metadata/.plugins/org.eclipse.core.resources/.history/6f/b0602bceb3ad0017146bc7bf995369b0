@@ -1,0 +1,24 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import exception.DaoException;
+import person.Person;
+
+
+public class Dao extends JdbcTools{
+	
+	public Collection<Person> findPersons() throws DaoException, SQLException {
+		
+		ResultSetToBean<Person> t = (rs)-> { return new Person(rs.getString("nom"), rs.getString("prenom"), rs.getInt("age"));};
+		String query = "select nom, prenom, age from personnes;";
+		Collection<Person> person = findBeans(query,t);
+		return person; 
+	}
+
+}

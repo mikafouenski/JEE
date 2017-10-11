@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSessionBindingListener"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="javax.mail.internet.InternetAddress"/>
+<fullyQualifiedTypeName name="fr.myapp.bus.PersonManager"/>
+<fullyQualifiedTypeName name="fr.myapp.bus.ExceptionPersonInvalidate"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="Person.Person"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="org.apache.jasper.tagplugins.jstl.core.ForEach"/>
+</qualifiedTypeNameHistroy>

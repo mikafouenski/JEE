@@ -1,0 +1,55 @@
+package fr.myapp.bus;
+
+import java.util.Collection;
+import java.util.Map;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
+import Person.Person;
+
+public class PersonManager {
+
+    final private Map<Integer, Person> persons;
+
+    public PersonManager() {
+    	persons = null;
+    }
+
+    public Collection<Person> findAll() {
+        throw new IllegalStateException("Not yet implemented");
+    }
+
+    public void save(Person p) throws Exception {
+        throw new IllegalStateException("Not yet implemented");
+    }
+
+    private boolean checkName(Person p) {
+    	return p.getNom().isEmpty();
+    }
+    
+    private boolean checkEmail(Person p) throws AddressException  {
+    	  String email = p.getAdressMail();
+          InternetAddress interNet = new InternetAddress(email);
+          interNet.validate();
+          return true;
+    }
+    
+    
+    public void check(Person p) throws ExceptionPersonInvalidate {
+    	ExceptionPersonInvalidate e = new ExceptionPersonInvalidate();
+    	boolean name = checkName(p);
+    	if(!name)
+    		e.setNomValide(false);
+    	try {
+			checkEmail(p);
+		} catch (AddressException e1) {
+			e.setEmailValide(false);
+			throw e;
+		}
+    	if(!name)
+    		throw e;
+    	
+    }
+
+}

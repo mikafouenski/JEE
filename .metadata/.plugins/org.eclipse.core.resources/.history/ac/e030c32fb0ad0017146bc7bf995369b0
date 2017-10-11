@@ -1,0 +1,77 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+
+public class JdbcTools {
+
+	private String driver;
+	private String url = "jdbc:mysql://127.0.0.1:9999/b13002175";
+	private String id = "b13002175";
+	private String password = "gRAYUM!.";
+
+	public String getDriver() {
+		return driver;
+	}
+	public void setDriver(String driver) {
+		this.driver = driver;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Connection newConnection() throws SQLException {
+		Connection conn = DriverManager.getConnection(url, id, password);
+		return conn;
+	}
+	public void quietClose(Connection c) {
+		try {
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public int executeUpdate(String query) throws SQLException {
+		Connection c = null;
+		int nb = 0;
+		try {
+			c = this.newConnection();
+			Statement st = c.createStatement();
+			nb = st.executeUpdate(query);
+			st.close();
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			this.quietClose(c);
+		}
+		return nb;
+	}
+	
+	public <T> Collection<T> findBeans(String sql, ResultSetToBean<T> mapper) {
+		
+		
+		return null;
+	}
+
+}

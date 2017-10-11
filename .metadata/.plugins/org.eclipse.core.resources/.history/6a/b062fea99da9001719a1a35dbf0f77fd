@@ -1,0 +1,91 @@
+// -*- coding: utf-8 -*-
+
+import java.util.Random ;
+
+public class TriFusion {
+    static final int taille = 100_000 ;             // Longueur du tableau à trier
+    static final int [] tableau = new int[taille] ; // Le tableau d'entiers à trier 
+    static final int borne = 10 * taille ;          // Valeur maximale dans le tableau
+    
+    public static void trierParFusion (int[] t, int début, int fin)
+    {
+        int milieu;
+        if(début < fin)
+            {                                           // s'il y a un seul élément, il n'y a rien à faire!
+                milieu = (début+fin) / 2 ;
+                trierParFusion(t, début, milieu) ;      // Première moitié à trier
+                trierParFusion(t, milieu + 1, fin) ;    // Seconde moitié à trier
+                fusionner(t, début, milieu, fin) ;      // Fusionner les deux parties triées de tableau
+            }
+    }
+
+    public static void fusionner (int[] t, int début, int milieu, int fin)
+    {
+        int aux[] = new int[fin-début+1] ;    // Un tableau auxilliaire pour préserver les 2 moitiés
+        for(int i = début; i <= fin; i++) {   // On recopie l'ensemble des éléments concernés
+            aux[i-début] = t[i] ;             // dans le tableau auxilliaire avec un décalage de début cases
+        }
+        int i1 = début ;                      // Indice du prochain élément de la première moitié à insérer
+        int i2 = milieu + 1 ;                 // Indice du prochain élément de la seconde moitié à insérer
+        for(int i = début; i <= fin; i++)     // Chaque itération détermine l'élément à placer en i
+            {                                       
+                if (i1 == (milieu+1)) {             // Si tous les éléments de la 1ère moitié ont déjà été placés
+                    break ;                         // c'est que tous les éléments sont déjà à leur place!
+                } 
+                if (i2 == (fin+1)) {                // Si tous les éléments du second tableau ont déjà été placés
+                    for (int j=i; j <= fin; j++){   // il suffit de placer les éléments du premier tableau
+                        t[j] = aux[i1-début] ;      // en les recopiant un à un dans l'ordre
+                        i1++;
+                    }
+                    break ;
+                } ;
+                if (aux[i1-début] < aux[i2-début]) {// Le plus petit des éléments restants est dans la 1ère moitié,
+                    t[i] = aux[i1-début];           // on l'insère à la position i
+                    i1++;                           // et on peut oublier cet élément
+                } else {                            // Le plus petit élément restant est dans la seconde moitié:
+                    t[i] = aux[i2-début];           // on l'insère à la position i
+                    i2++;                           // et on peut oublier cet élément
+                }
+            }
+    }
+
+    private static void afficher(int[] t, int début, int fin)
+    {
+        for (int i = début ; i <= début+3 ; i++) {
+            System.out.print(" " + t[i]) ;
+        }
+        System.out.print("...") ;
+        for (int i = fin-3 ; i <= fin ; i++) {
+            System.out.print(" " + t[i]) ;
+        }
+        System.out.print("\n") ;
+    }
+
+    /*
+    private static void afficher(int[] t, int m, int n)
+    {
+        for (int i = m ; i <= n ; i++) {
+            System.out.print(" " + t[i]) ;
+        }
+        System.out.print("\n") ;
+    }
+    */
+
+    public static void main(String[] args) {
+        Random alea = new Random(System.currentTimeMillis()) ;
+        for(int i=0 ; i<taille ; i++) {                       // Remplissage aléatoire du tableau
+            tableau[i] = alea.nextInt(2*borne) - borne ;            
+        }
+        System.out.print("Tableau initial : ") ;
+        afficher(tableau, 0, taille -1) ;                     // Affiche le tableau à trier
+        trierParFusion(tableau, 0, tableau.length-1) ;        // Tri du tableau
+        System.out.print("Tableau trié : ") ;
+        afficher(tableau, 0, taille -1) ;                     // Affiche le tableau obtenu
+    }
+}
+
+/*
+$ java TriFusion
+Tableau initial :  -26 -2 66 54... 40 -4 -35 45
+Tableau trié :  -35 -26 -4 -2... 45 49 54 66
+*/

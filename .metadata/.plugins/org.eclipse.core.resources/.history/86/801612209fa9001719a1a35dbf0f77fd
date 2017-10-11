@@ -1,0 +1,11 @@
+package tru;
+
+public class triFuPar {
+
+	
+	
+	public static void main(String[] args) {
+		System.out.println(100_000/128);
+		System.out.println(781*128);
+	}
+}

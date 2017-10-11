@@ -1,0 +1,89 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import com.mysql.fabric.xmlrpc.base.Array;
+
+import exception.DaoException;
+import jdbc.Dao;
+import jdbc.JdbcTools;
+import person.Person;
+
+public class DaoTest {
+
+	private static Dao dao;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		dao = new Dao();
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Before
+	public void setUp() throws Exception {
+
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test @Ignore
+	public void testFindPerson() throws DaoException {
+		Collection<Person> result = dao.findPersons();
+		assertEquals(1, result.size());
+	}
+
+	@Test @Ignore
+	public void testAddPerson() throws DaoException, SQLException {
+		Collection<Person> result = dao.findPersons();
+		int before = result.size();
+		Person micka = new Person();
+		micka.setNom("Bernardhià");
+		micka.setPrenom("MihChael");
+		micka.setAge(17);
+		dao.addPerson(micka);
+		result = dao.findPersons();
+		int after = result.size();
+		assertEquals(1, after - before);
+	}
+	
+	@Test @Ignore
+	public void testRemovePerson() throws DaoException, SQLException {
+		Collection<Person> result = dao.findPersons();
+		int before = result.size();
+		dao.removePerson(3);
+		result = dao.findPersons();
+		int after = result.size();
+		assertEquals(1, before - after);
+	}
+	
+	@Test 
+	public void testUpdatePerson() throws DaoException, SQLException {
+		Person p = new Person();
+		p.setId(4);
+		p.setAge(2);
+		p.setNom("update");
+		p.setPrenom("marhce");
+		dao.UpdatePerson(p);
+		Collection<Person> result = dao.findPersons();
+		result.contains(p);
+	}
+
+}

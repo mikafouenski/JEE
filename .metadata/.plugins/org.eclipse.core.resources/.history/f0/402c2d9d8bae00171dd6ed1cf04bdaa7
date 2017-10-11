@@ -1,0 +1,8 @@
+package fr.myapp.bus;
+
+public class ExceptionPersonInvalidate extends Exception {
+	private isNomValide;
+	private isEmailValide;
+	
+	
+}

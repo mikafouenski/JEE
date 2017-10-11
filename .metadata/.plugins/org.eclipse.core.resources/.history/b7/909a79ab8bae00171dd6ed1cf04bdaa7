@@ -1,0 +1,21 @@
+package fr.myapp.bus;
+
+public class ExceptionPersonInvalidate extends Exception {
+	private boolean isNomValide;
+	private boolean isEmailValide;
+	public boolean isNomValide() {
+		return isNomValide;
+	}
+	public void setNomValide(boolean isNomValide) {
+		this.isNomValide = isNomValide;
+	}
+	public boolean isEmailValide() {
+		return isEmailValide;
+	}
+	public void setEmailValide(boolean isEmailValide) {
+		this.isEmailValide = isEmailValide;
+	}
+	
+	
+	
+}

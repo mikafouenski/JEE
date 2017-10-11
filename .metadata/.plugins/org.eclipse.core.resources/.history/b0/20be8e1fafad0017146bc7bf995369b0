@@ -1,0 +1,59 @@
+package test;
+
+import static org.junit.Assert.*;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import jdbc.JdbcTools;
+
+public class JdbcToolsTest {
+	
+	private JdbcTools jdbcTools;
+
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		jdbcTools = new JdbcTools();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+
+	}
+
+	@Test
+	public void testNewDefaultConnection() throws SQLException {
+		Connection c = jdbcTools.newConnection();
+		assertNotNull(c);
+	}
+	
+	@Test
+	public void testQuietClose() throws SQLException {
+		Connection c = jdbcTools.newConnection();
+		jdbcTools.quietClose(c);
+		assertTrue(c.isClosed());
+	}
+	
+	@Test
+	public void testExecuteQuery() throws SQLException {
+		int nb = jdbcTools.executeUpdate("INSERT INTO test (nom, age) values ('sylvain', 3);");
+		assertEquals(2, nb);
+	}
+	
+
+}
