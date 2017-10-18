@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
-
 import Person.Person;
 import exception.ExceptionPersonInvalidate;
 
@@ -36,6 +34,10 @@ public class PersonManager {
 
 	public Collection<Person> findAll() {
 		return persons.values();
+	}
+	
+	public Person getPerson(int i) {
+		return persons.get(i);
 	}
 
 	public void save(Person p) {

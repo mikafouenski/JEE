@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:useBean id="perM" scope="request" class="fr.myapp.bus.PersonManager" >
+	<jsp:useBean id="perM" scope="application" class="fr.myapp.bus.PersonManager" >
 	</jsp:useBean> 
 	<table>
 		<tr>
@@ -22,18 +22,19 @@
 			<td>DateNaissance</td>
 			<td>AdressMail</td>
 		</tr>
-		<% 
-			
+		<%
 			for(Person p : perM.findAll()) {
 				out.println("<tr>");
 				out.println("<td>"+ p.getId() + "</td>");
-				out.println("<td>"+ p.getNom() + "</td>");
+				out.println("<td><a href=\"edition?numero=" + p.getId() + "\"> "+ p.getNom() + "</a></td>");
 				out.println("<td>"+ p.getPrenom() + "</td>");
 				out.println("<td>"+ p.getDateNaissance() + "</td>");
 				out.println("<td>"+ p.getAdressMail() + "</td>");
+				out.println("<td><a href=\"supprimer?numero=" + p.getId() + "\"> supprimer</a></td>");
 				out.println("</tr>");
 			}
-		%>		
+		%>
 	</table>
+	<a href="edition"> Ajouter une personne</a>
 </body>
 </html>

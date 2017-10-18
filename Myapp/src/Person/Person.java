@@ -2,7 +2,7 @@ package Person;
 import java.util.Date;
 public class Person {
 	
-	private int id = 1;
+	private int id = 0;
 	private String nom = "defaultName";
 	private String prenom = "defaultPrenom";
 	private Date dateNaissance = new Date(); 
@@ -10,8 +10,8 @@ public class Person {
 	private static int cpt = 0;
 	
 	public Person(){
-		++cpt;
 		setId(cpt);
+		++cpt;
 	}
 	
 	public int getId() {
