@@ -22,11 +22,16 @@ public class PersonManager {
 			p.setFirstname("f" + i);
 			p.setBirthdate(new Date());
 			p.setMail("m" + i);
+			persons.put(p.getId(), p);
 		}
 	}
 
 	public Collection<Person> findAll() {
 		return persons.values();
+	}
+
+	public Map<Integer, Person> getPersons() {
+		return persons;
 	}
 
 	public void save(Person p) {
@@ -49,6 +54,15 @@ public class PersonManager {
 		}
 
 		return v;
+	}
+
+	public Person getPerson(int key) {
+		return persons.get(key);
+	}
+
+	public void display() {
+		for (int k : persons.keySet())
+			System.out.println(persons.get(k));
 	}
 
 }

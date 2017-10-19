@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<jsp:useBean id="p" scope="session" class="beans.Person">
+	<jsp:useBean id="p" scope="request" class="beans.Person">
 		<p>Nouvelle Personne !</p>
 	</jsp:useBean>
 
@@ -16,7 +16,7 @@
 
 		<label>Nom : </label>
 		<input type="text" name="name" size="15" value="<jsp:getProperty name="p" property="name"/>"/> 
-		<p style="color: red">${nameError}</p><br>
+		<span style="color: red">${nameError}</span><br>
 		
 		<label>Prenom : </label>
 		<input type="text" name="firstname" size="15" value="<jsp:getProperty name="p" property="firstname"/>"/><br>
@@ -26,7 +26,7 @@
 		
 		<label>Mail : </label>
 		<input type="text" name="mail" value="<jsp:getProperty name="p" property="mail"/>"/>
-		<p style="color: red">${emailError}</p><br>
+		<span style="color: red">${emailError}</span><br>
 		
 		<input type="submit" name="boutonOK"value="Valider"/>
 

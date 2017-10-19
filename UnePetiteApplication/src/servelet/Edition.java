@@ -14,8 +14,7 @@ import beans.Person;
 import metier.PersonManager;
 import metier.ValidatorPerson;
 
-
-@WebServlet(name = "edition", urlPatterns = { "/edition" })
+@WebServlet(name = "edition", urlPatterns = { "/edition", "/supprimer" })
 public class Edition extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -23,12 +22,51 @@ public class Edition extends HttpServlet {
 		Object o_m = request.getServletContext().getAttribute("manager");
 		if (o_m instanceof PersonManager)
 			return (PersonManager) o_m;
-		return new PersonManager();
+		PersonManager manager = new PersonManager();
+		request.getServletContext().setAttribute("manager", manager);
+		return manager;
+	}
+
+	private void exectueAdd(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("edition.jsp").forward(request, response);
+	}
+	
+	private void executeEdit(HttpServletRequest request, HttpServletResponse response, Person p) throws ServletException, IOException {
+		request.setAttribute("p", p);
+		request.getRequestDispatcher("edition.jsp").forward(request, response);
+	}
+	
+	private void executeDelete(HttpServletRequest request, HttpServletResponse response, Person p) throws ServletException, IOException {
+		getPersonManager(request).getPersons().remove(p).getId();
+		request.getRequestDispatcher("lister.jsp").forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String num_str = request.getParameter("numero");
+		System.out.println(num_str);
+		if (num_str == null) {
+			exectueAdd(request, response);
+			return;
+		}
+		int num;
+		try {
+			num = Integer.parseInt(num_str);
+		} catch (Exception e) {
+			System.out.println("Erreur num =" + num_str);
+			e.printStackTrace();
+			exectueAdd(request, response);
+			return;
+		}
+		Person p = getPersonManager(request).getPerson(num);
+		if (p == null) {
+			System.out.println("p est null");
+			getPersonManager(request).display();
+			exectueAdd(request, response);
+			return;
+		}
+		executeEdit(request, response, p);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +77,7 @@ public class Edition extends HttpServlet {
 		String mail = request.getParameter("mail");
 
 		Person p = null;
-		Object o_p = request.getSession().getAttribute("p");
+		Object o_p = request.getAttribute("p");
 		if (o_p instanceof Person) {
 			p = (Person) o_p;
 		} else {
@@ -49,24 +87,25 @@ public class Edition extends HttpServlet {
 
 		p.setName(name);
 		p.setFirstname(firstname);
+		p.setMail(mail);
 		try {
 			p.setBirthdate(new SimpleDateFormat().parse(birthdate));
 		} catch (ParseException e) {
 			System.out.println("Date echec !");
 		}
-		p.setMail(mail);
 
 		PersonManager manager = getPersonManager(request);
 		ValidatorPerson vP = manager.check(p);
 
-		request.setAttribute("p", p);
 		if (vP.hasError()) {
 			if (!vP.getEmailError().isEmpty())
 				request.setAttribute("emailError", vP.getEmailError());
 			if (!vP.getNameError().isEmpty())
 				request.setAttribute("nameError", vP.getNameError());
-			request.getRequestDispatcher("edition.jsp").forward(request, response);
+			executeEdit(request, response, p);
 		} else {
+			manager.save(p);
+			request.setAttribute("p", p);
 			request.getRequestDispatcher("person.jsp").forward(request, response);
 		}
 	}

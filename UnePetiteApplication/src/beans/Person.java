@@ -58,4 +58,10 @@ public class Person {
 		this.mail = mail;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", firstname=" + firstname + ", birthdate=" + birthdate
+				+ ", mail=" + mail + "]";
+	}
+
 }
